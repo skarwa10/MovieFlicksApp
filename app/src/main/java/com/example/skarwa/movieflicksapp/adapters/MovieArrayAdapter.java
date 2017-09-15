@@ -1,6 +1,7 @@
 package com.example.skarwa.movieflicksapp.adapters;
 
 import android.content.Context;
+import android.content.res.Configuration;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,7 +31,6 @@ public class MovieArrayAdapter extends ArrayAdapter<Movie> {
         ImageView image;
     }
 
-
     public MovieArrayAdapter(Context context, List<Movie> movies) {
         super(context, android.R.layout.simple_list_item_1, movies);
     }
@@ -44,7 +44,6 @@ public class MovieArrayAdapter extends ArrayAdapter<Movie> {
             viewHolder = new ViewHolder();
             LayoutInflater inflater = LayoutInflater.from(getContext());
 
-            //TODO: understand this (false -> dont actually attach it..make changes myself)
             convertView = inflater.inflate(R.layout.item_movie,parent,false);
 
             viewHolder.title = (TextView) convertView.findViewById(tvTitle);
@@ -61,8 +60,14 @@ public class MovieArrayAdapter extends ArrayAdapter<Movie> {
         viewHolder.title.setText(movie.getOriginalTitle());
         viewHolder.overview.setText(movie.getOverview());
 
-        Picasso.with(getContext()).load(movie.getPosterPath()).into(viewHolder.image);
-
+        int orientation = getContext().getResources().getConfiguration().orientation;
+        if (orientation == Configuration.ORIENTATION_PORTRAIT) {
+            //poster_path image in Potrait
+            Picasso.with(getContext()).load(movie.getPosterPath()).into(viewHolder.image);
+        } else if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            //backdrop_path image in Landscape
+            Picasso.with(getContext()).load(movie.getBackdropPath()).into(viewHolder.image);
+        }
         return convertView;
     }
 }

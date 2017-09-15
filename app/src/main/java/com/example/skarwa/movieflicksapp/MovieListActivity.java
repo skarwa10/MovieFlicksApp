@@ -7,6 +7,7 @@ import android.widget.ListView;
 
 import com.example.skarwa.movieflicksapp.adapters.MovieArrayAdapter;
 import com.example.skarwa.movieflicksapp.models.Movie;
+import com.example.skarwa.movieflicksapp.utils.MovieListUtils;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
@@ -20,6 +21,8 @@ import java.util.ArrayList;
 import cz.msebera.android.httpclient.Header;
 
 import static android.icu.lang.UCharacter.GraphemeClusterBreak.L;
+import static com.example.skarwa.movieflicksapp.utils.MovieListUtils.NOW_PLAYING_URL;
+import static com.example.skarwa.movieflicksapp.utils.MovieListUtils.RESULTS;
 
 public class MovieListActivity extends AppCompatActivity {
     ArrayList<Movie> movies;
@@ -36,18 +39,16 @@ public class MovieListActivity extends AppCompatActivity {
         movieAdapter = new MovieArrayAdapter(this,movies);
         lvItems.setAdapter(movieAdapter);
 
-        String getNowPlayingMoviesUrl = "https://api.themoviedb.org/3/movie/now_playing?api_key=a07e22bc18f5cb106bfe4cc1f83ad8ed";
-
         AsyncHttpClient client = new AsyncHttpClient();
         RequestParams params = new RequestParams();
 
-        client.get(getNowPlayingMoviesUrl,new JsonHttpResponseHandler(){
+        client.get(MovieListUtils.NOW_PLAYING_URL,new JsonHttpResponseHandler(){
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 JSONArray movieJsonResults = null;
 
                 try {
-                    movieJsonResults = response.getJSONArray("results");
+                    movieJsonResults = response.getJSONArray(MovieListUtils.RESULTS);
                     movies.addAll(Movie.fromJsonArray(movieJsonResults));
                     movieAdapter.notifyDataSetChanged();
                     Log.d("DEBUG",movies.toString());
