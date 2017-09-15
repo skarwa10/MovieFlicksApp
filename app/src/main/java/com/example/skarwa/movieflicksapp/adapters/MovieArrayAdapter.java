@@ -2,6 +2,7 @@ package com.example.skarwa.movieflicksapp.adapters;
 
 import android.content.Context;
 import android.content.res.Configuration;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,20 +16,23 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-import static com.example.skarwa.movieflicksapp.R.id.tvOverview;
-import static com.example.skarwa.movieflicksapp.R.id.tvTitle;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * Created by skarwa on 9/14/17.
  */
 
 public class MovieArrayAdapter extends ArrayAdapter<Movie> {
-
     // View lookup cache
-    private static class ViewHolder {
-        TextView title;
-        TextView overview;
-        ImageView image;
+    static class ViewHolder {
+        @BindView(R.id.tvTitle) TextView title;
+        @BindView(R.id.tvOverview) TextView overview;
+        @BindView(R.id.ivMovieImage) ImageView image;
+
+        public ViewHolder(View view) {
+            ButterKnife.bind(this, view);
+        }
     }
 
     public MovieArrayAdapter(Context context, List<Movie> movies) {
@@ -41,15 +45,9 @@ public class MovieArrayAdapter extends ArrayAdapter<Movie> {
 
         ViewHolder viewHolder;
         if(convertView == null){
-            viewHolder = new ViewHolder();
             LayoutInflater inflater = LayoutInflater.from(getContext());
-
             convertView = inflater.inflate(R.layout.item_movie,parent,false);
-
-            viewHolder.title = (TextView) convertView.findViewById(tvTitle);
-            viewHolder.overview = (TextView) convertView.findViewById(tvOverview);
-            viewHolder.image = (ImageView) convertView.findViewById(R.id.ivMovieImage);
-
+            viewHolder = new ViewHolder(convertView);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
@@ -60,14 +58,31 @@ public class MovieArrayAdapter extends ArrayAdapter<Movie> {
         viewHolder.title.setText(movie.getOriginalTitle());
         viewHolder.overview.setText(movie.getOverview());
 
+        Picasso.with(getContext()).load(getImageBasedOnOrientation(movie))
+                .resize(600,0)
+                .placeholder(R.drawable.movie_placeholder)
+                .error(R.drawable.image_error)
+                .noFade()
+                .into(viewHolder.image);
+
+        return convertView;
+    }
+
+    /**
+     * Get Image based on Orientation.
+     * For Potrait -> we user poster_path image
+     * For Landscape -> we will user backdrop_path image
+     * @param movie
+     * @return Image url
+     */
+    private String getImageBasedOnOrientation(Movie movie){
         int orientation = getContext().getResources().getConfiguration().orientation;
         if (orientation == Configuration.ORIENTATION_PORTRAIT) {
-            //poster_path image in Potrait
-            Picasso.with(getContext()).load(movie.getPosterPath()).into(viewHolder.image);
+            return  movie.getPosterPath();
         } else if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            //backdrop_path image in Landscape
-            Picasso.with(getContext()).load(movie.getBackdropPath()).into(viewHolder.image);
+            return movie.getBackdropPath();
+        } else {
+            return movie.getPosterPath();
         }
-        return convertView;
     }
 }

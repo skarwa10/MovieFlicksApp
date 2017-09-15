@@ -18,6 +18,8 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import cz.msebera.android.httpclient.Header;
 
 import static android.icu.lang.UCharacter.GraphemeClusterBreak.L;
@@ -27,14 +29,14 @@ import static com.example.skarwa.movieflicksapp.utils.MovieListUtils.RESULTS;
 public class MovieListActivity extends AppCompatActivity {
     ArrayList<Movie> movies;
     MovieArrayAdapter movieAdapter;
-    ListView lvItems;
+    @BindView(R.id.lvMovieList) ListView lvItems;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie_list);
 
-        lvItems = (ListView) findViewById(R.id.lvMovieList);
+        ButterKnife.bind(this);
         movies = new ArrayList<>();
         movieAdapter = new MovieArrayAdapter(this,movies);
         lvItems.setAdapter(movieAdapter);
