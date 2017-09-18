@@ -12,4 +12,8 @@ public abstract class MovieListUtils {
     public static final String OVERVIEW = "overview";
     public static final String ORIGINAL_TITLE = "original_title";
     public static final String BACKDROP_PATH = "backdrop_path";
+    public static final String POPULARITY = "popularity";
+    public static final String VOTE_AVG = "vote_average";
+    public static final String RELEASE_DATE = "release_date";
+    public static final String INTENT_MOVIE = "movie";
 }

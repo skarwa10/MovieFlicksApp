@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/colorBlack"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.skarwa.movieflicksapp.MovieDetailActivity">
+
+    <ImageView
+        android:id="@+id/ivMovieImage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:src="@mipmap/ic_launcher"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:id="@+id/tvDetailTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Title"
+        android:textAlignment="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textColor="@color/colorWhite"
+        android:textStyle="bold"
+        android:layout_below="@+id/ivMovieImage"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:id="@+id/tvDetailOverview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Overview"
+        android:textStyle="italic"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@color/colorWhite"
+        android:layout_below="@+id/rbDetailRating"
+        android:layout_alignParentStart="true" />
+
+    <EditText
+        android:id="@+id/etReleaseDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@android:color/transparent"
+        android:clickable="false"
+        android:ems="8"
+        android:focusableInTouchMode="false"
+        android:inputType="date"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@color/colorWhite"
+        android:layout_below="@+id/tvDetailTitle"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true" />
+
+    <EditText
+        android:id="@+id/etPopularity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/etReleaseDate"
+        android:backgroundTint="@android:color/transparent"
+        android:clickable="false"
+        android:ems="10"
+        android:focusableInTouchMode="false"
+        android:inputType="numberDecimal"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@color/colorWhite" />
+
+    <RatingBar
+        android:id="@+id/rbDetailRating"
+        style="@android:style/Widget.Holo.RatingBar.Indicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:isIndicator="true"
+        android:numStars="5"
+        android:progressBackgroundTint="@color/colorWhite"
+        android:progressTint="@color/colorOrange"
+        android:stepSize="0.5"
+        android:layout_below="@+id/etPopularity"
+        android:layout_alignParentStart="true" />
+
+</RelativeLayout>

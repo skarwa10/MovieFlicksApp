@@ -1,17 +1,23 @@
 package com.example.skarwa.movieflicksapp.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.skarwa.movieflicksapp.MovieDetailActivity;
 import com.example.skarwa.movieflicksapp.R;
 import com.example.skarwa.movieflicksapp.models.Movie;
+import com.example.skarwa.movieflicksapp.utils.MovieListUtils;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -29,9 +35,13 @@ public class MovieArrayAdapter extends ArrayAdapter<Movie> {
         @BindView(R.id.tvTitle) TextView title;
         @BindView(R.id.tvOverview) TextView overview;
         @BindView(R.id.ivMovieImage) ImageView image;
+        @BindView(R.id.ivShowDetail)
+        ImageView showDetails;
 
         public ViewHolder(View view) {
             ButterKnife.bind(this, view);
+
+
         }
     }
 
@@ -40,7 +50,7 @@ public class MovieArrayAdapter extends ArrayAdapter<Movie> {
     }
 
     @Override
-    public View getView(int position,View convertView,ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         Movie movie = getItem(position);
 
         ViewHolder viewHolder;
@@ -57,6 +67,17 @@ public class MovieArrayAdapter extends ArrayAdapter<Movie> {
 
         viewHolder.title.setText(movie.getOriginalTitle());
         viewHolder.overview.setText(movie.getOverview());
+        viewHolder.showDetails.setOnClickListener(new View.OnClickListener(){
+
+
+            @Override
+            public void onClick(View view) {
+                Movie movie = getItem(position);
+
+                launchMovieDetailView(movie);
+                Log.d("DEBUG",movie.toString());
+            }
+        });
 
         Picasso.with(getContext()).load(getImageBasedOnOrientation(movie))
                 .resize(600,0)
@@ -67,6 +88,16 @@ public class MovieArrayAdapter extends ArrayAdapter<Movie> {
 
         return convertView;
     }
+
+    public void launchMovieDetailView(Movie movie) {
+        // first parameter is the context, second is the class of the activity to launch
+        Intent i = new Intent(getContext(), MovieDetailActivity.class);
+
+        i.putExtra(MovieListUtils.INTENT_MOVIE,movie);
+
+        getContext().startActivity(i); // brings up the second activity
+    }
+
 
     /**
      * Get Image based on Orientation.

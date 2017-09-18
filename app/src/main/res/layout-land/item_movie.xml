@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/colorBlack"
     android:layout_width="match_parent" android:layout_height="match_parent">
 
     <ImageView
@@ -15,10 +17,14 @@
         android:id="@+id/tvTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentTop="true"
         android:layout_toEndOf="@+id/ivMovieImage"
-        android:text="TextView"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+        android:text="Title"
+        android:textAlignment="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textColor="@color/colorWhite"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/tvOverview"
@@ -26,7 +32,19 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/tvTitle"
         android:layout_toEndOf="@+id/ivMovieImage"
-        android:text="TextView"
-        android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+        android:text="Overview"
+        android:textAlignment="viewStart"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        android:textColor="@color/colorWhite"
+        android:textSize="18sp"
+        android:textStyle="italic" />
+
+    <ImageView
+        android:id="@+id/ivShowDetail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvOverview"
+        android:layout_toEndOf="@+id/ivMovieImage"
+        app:srcCompat="@drawable/ic_showdetail" />
 
 </RelativeLayout>
